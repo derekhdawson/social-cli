@@ -30,6 +30,14 @@ const isValidEmail = (email) => {
 }
 
 module.exports = async (args) => {
+
+    try {
+        const user = await utils.getCurrentUser();
+        if (user) {
+            console.log('You are already sign in. You must be signed out to register.')
+            return;
+        }
+    } catch (error) { console.log(error); }
     
     let email;
     let password;
@@ -45,7 +53,7 @@ module.exports = async (args) => {
 
     const spinner = ora().start()
     try {
-        const user = await api.registerUser({
+        const user = await api.register({
             username,
             email,
             password

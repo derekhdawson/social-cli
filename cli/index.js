@@ -20,6 +20,9 @@ module.exports = () => {
         case 'login':
             require('./cmds/login')(args)
             break
+        case 'logout':
+            require('./cmds/logout')(args)
+            break
         case 'profile':
             require('./cmds/profile')(args)
             break

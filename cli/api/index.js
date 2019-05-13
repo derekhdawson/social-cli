@@ -25,9 +25,7 @@ const request = (options) => {
         } else {
             utils.getCurrentUser().then((user) => {
                 if (!user) {
-                    const error = 'you must sign in first';
-                    ora().info(error);
-                    reject(error);
+                    reject('ERROR: you must sign in first');
                 } else {
                     const { token } = user;
                     requestObj.headers = {
@@ -44,7 +42,7 @@ const request = (options) => {
     })
 }
 
-exports.registerUser = (user) => {
+exports.register = (user) => {
     return request({
         method: 'POST',
         endpoint: 'users',
@@ -54,7 +52,23 @@ exports.registerUser = (user) => {
         if (response.user) {
             return response.user;
         }
-        throw new Error('user could not be registered');
+        throw new Error('ERROR: user could not be registered');
+    }).catch((error) => {
+        throw error;
+    });
+}
+
+exports.login = (user) => {
+    return request({
+        method: 'POST',
+        endpoint: 'users/login',
+        authNotRequired: true,
+        body: { user }
+    }).then((response) => {
+        if (response.user) {
+            return response.user;
+        }
+        throw new Error('ERROR: user could not be registered');
     }).catch((error) => {
         throw error;
     });
