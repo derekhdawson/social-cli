@@ -39,27 +39,20 @@ router.post('/login', auth.optional, (req, res, next) => {
         }
     } = req;
 
-    if (!user.email) {
-        return res.status(422).json({
-            errors: {
-                email: 'is required',
-            },
-        });
-    }
-
-    if (!user.password) {
-        return res.status(422).json({
-            errors: {
-                password: 'is required',
-            },
-        });
-    }
+    let errorMessage;
+    if (!user.email) errorMessage = 'email is required';
+    if (!user.password) errorMessage = 'password is required';
+    if (errorMessage) return res.status(422).json({ message: errorMessage });
 
     return passport.authenticate('local', {
         session: false
     }, (err, passportUser, info) => {
         if (err) {
             return next(err);
+        }
+
+        if (info && info.errors) {
+            return res.status(403).json(info.errors);
         }
 
         if (passportUser) {
@@ -71,7 +64,7 @@ router.post('/login', auth.optional, (req, res, next) => {
             });
         }
 
-        return status(400).info;
+        return res.status(400).info;
     })(req, res, next);
 });
 
