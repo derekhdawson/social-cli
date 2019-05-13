@@ -1,7 +1,8 @@
 const ora = require('ora')
 const api = require('../api');
 const utils = require('../utils');
-const store = require('store')
+const keytar = require('keytar');
+const config = require('../config');
 
 const inputFailed = (message) => {
     ora().fail(message);
@@ -44,15 +45,18 @@ module.exports = async (args) => {
 
     const spinner = ora().start()
     try {
-        const response = await api.registerUser({
+        const user = await api.registerUser({
             username,
             email,
             password
         });
-    
-        spinner.stop();
-        store.set('currentUser', response.data.user);
-        ora().succeed('Welcome to the cli-social-network');
+
+        if (user) {
+            await keytar.setPassword(config.keytar.service, config.keytar.account, JSON.stringify(user));
+            spinner.stop().succeed('Welcome to the cli-social-network');
+        } else {
+            throw new Error('user could not be regsitered');
+        }
     } catch (error) {
         spinner.stop().fail(error.response.data.message);
     }

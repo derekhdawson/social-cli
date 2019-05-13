@@ -1,4 +1,6 @@
 const readline = require('readline');
+const config = require('../config');
+const keytar = require('keytar');
 
 exports.promptInput = (question) => {
     const rl = readline.createInterface({
@@ -21,4 +23,15 @@ exports.isValidEmail = (email) => {
         return false;
     }
     return true;
+}
+
+exports.getCurrentUser = () => {
+    return keytar.getPassword(config.keytar.service, config.keytar.account).then((user) => {
+        if (user) {
+            return JSON.parse(user);
+        }
+        return null;
+    }).catch(() => {
+        return null;
+    })
 }
