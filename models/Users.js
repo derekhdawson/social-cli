@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-const {
-    Schema
-} = mongoose;
+const { Schema } = mongoose;
 
 const UsersSchema = new Schema({
     email: {
@@ -14,6 +12,13 @@ const UsersSchema = new Schema({
     username: {
         type: String,
         required: true
+    },
+    friends: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users'
+        }],
+        default: []
     },
     hash: {
         type: String,

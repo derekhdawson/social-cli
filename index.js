@@ -36,6 +36,7 @@ mongoose.connect(keys.MONGO_CONNECTION, { useNewUrlParser: true }).then(() => {
 mongoose.set('debug', true);
 
 require('./models/Users');
+require('./models/FriendRequests');
 require('./config/passport');
 app.use(require('./routes'));
 
