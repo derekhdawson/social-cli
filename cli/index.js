@@ -26,10 +26,18 @@ module.exports = () => {
         case 'profile':
             require('./cmds/profile')(args)
             break
+        case 'send-request':
+            require('./cmds/sendRequest')(args)
+            break
+        case 'accept-request':
+            require('./cmds/acceptRequest')(args)
+            break
+        case 'searchUsers':
+            require('./cmds/searchUsers')(args)
+            break
         case 'version':
             require('./cmds/version')(args)
             break
-
         case 'help':
             require('./cmds/help')(args)
             break

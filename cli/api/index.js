@@ -83,4 +83,33 @@ exports.getProfile = () => {
     }).catch((error) => {
         throw error;
     })
+};
+
+exports.sendFriendRequest = ({ id, username }) => {
+    const body = {};
+    if (id) body.id = id;
+    if (username) body.username = username;
+    return request({
+        method: 'POST',
+        endpoint: 'users/sendFriendRequest',
+        body
+    })
+};
+
+exports.acceptFriendRequest = ({ id, username }) => {
+    const body = {};
+    if (id) body.id = id;
+    if (username) body.username = username;
+    return request({
+        method: 'POST',
+        endpoint: 'users/acceptFriendRequest',
+        body
+    })
+};
+
+exports.searchUsers = () => {
+    return request({
+        method: 'GET',
+        endpoint: 'users/searchUsers'
+    });
 }
