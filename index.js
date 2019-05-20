@@ -38,6 +38,7 @@ mongoose.set('debug', true);
 require('./models/Users');
 require('./models/FriendRequests');
 require('./models/Posts');
+require('./models/Comments');
 require('./config/passport');
 app.use(require('./routes'));
 

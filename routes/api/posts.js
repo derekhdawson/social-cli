@@ -3,6 +3,7 @@ const router = require('express').Router();
 const auth = require('../auth');
 const Users = mongoose.model('Users');
 const Posts = mongoose.model('Posts');
+const Comments = mongoose.model('Comments');
 const asyncMiddleware = require('../../utils').asyncMiddleware;
 
 router.post('/', auth.required, asyncMiddleware(async (req, res) => {
@@ -48,5 +49,30 @@ router.post('/', auth.required, asyncMiddleware(async (req, res) => {
         return res.status(500).json(error);
     }
 }));
+
+router.post('/comment', auth.required, asyncMiddleware(async (req, res) => {
+    const { payload } = req;
+    const { body } = req;
+
+    if (!body.comment || !body.postId) {
+        return res.status(422).json('you must pass in --comment and --postId params');
+    }    
+
+    const newComment = new Comments({
+        user: payload.id,
+        comment: body.comment,
+        postId: body.postId
+    });
+
+    try {
+        const comment = await newComment.save();
+        const post = await Posts.findById(body.postId);
+        post.comments.push(comment);
+        await post.save();
+        res.json('your comment was added to this post');
+    } catch (error) {
+        res.status(500).error(error);
+    }
+}))
 
 module.exports = router;
