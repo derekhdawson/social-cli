@@ -17,6 +17,10 @@ const menus = {
             examples:
             social post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee"
 
+        comment................. comment on a post
+            examples:
+            social comment --comment="nice photo!" postId="5ce30cddf9534a3486266621"
+
         send-request........... send a friend request
 
             examples:
@@ -71,6 +75,12 @@ const menus = {
         --post=[post]
         --tag=<username1, username2, username3...>
         --hashtags=<hashtag1, hashtag2, hashtag3...>
+    `,
+    comment: `
+        social comment <options>
+        
+        --comment=[comment]
+        --postId=[id]
     `
 
     

@@ -38,6 +38,9 @@ module.exports = () => {
         case 'post':
             require('./cmds/post')(args)
             break
+        case 'comment':
+            require('./cmds/comment')(args)
+            break
         case 'version':
             require('./cmds/version')(args)
             break

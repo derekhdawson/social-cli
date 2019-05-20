@@ -124,3 +124,12 @@ exports.createPost = ({ post, taggedUsers, hashtags }) => {
         body
     })
 };
+
+exports.commentOnPost = ({ comment, postId }) => {
+    const body = { comment, postId };
+    return request({
+        method: 'POST',
+        endpoint: 'posts/comment',
+        body
+    })
+};
