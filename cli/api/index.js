@@ -112,4 +112,15 @@ exports.searchUsers = () => {
         method: 'GET',
         endpoint: 'users/searchUsers'
     });
-}
+};
+
+exports.createPost = ({ post, taggedUsers, hashtags }) => {
+    const body = { post };
+    if (taggedUsers) body.taggedUsers = taggedUsers;
+    if (hashtags) body.hashtags = hashtags;
+    return request({
+        method: 'POST',
+        endpoint: 'posts',
+        body
+    })
+};

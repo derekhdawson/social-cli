@@ -32,8 +32,11 @@ module.exports = () => {
         case 'accept-request':
             require('./cmds/acceptRequest')(args)
             break
-        case 'searchUsers':
+        case 'search-users':
             require('./cmds/searchUsers')(args)
+            break
+        case 'post':
+            require('./cmds/post')(args)
             break
         case 'version':
             require('./cmds/version')(args)

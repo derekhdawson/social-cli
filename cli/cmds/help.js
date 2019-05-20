@@ -12,6 +12,11 @@ const menus = {
         logout................. logs you out of social
 
 
+        post................... make a post
+
+            examples:
+            social post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee"
+
         send-request........... send a friend request
 
             examples:
@@ -24,6 +29,8 @@ const menus = {
             examples:
             social accept-request --id="5cd9c466a612adac28e0023d"
             social accept-request --username="derekd"
+
+        search-users.............. search for users on the network
 
 
         help .................. show help menu for a command
@@ -48,11 +55,22 @@ const menus = {
     `,
 
     'accept-request': `
-    social accept-request <options>
+        social accept-request <options>
 
-    --id=[id]
-    --username=[username]
+        --id=[id]
+        --username=[username]
+    `,
+    'search-users': `
+        social search-users <options>
 
+        --username=[username]
+    `,
+    post: `
+        social post <options>
+
+        --post=[post]
+        --tag=<username1, username2, username3...>
+        --hashtags=<hashtag1, hashtag2, hashtag3...>
     `
 
     
