@@ -78,16 +78,11 @@ router.post('/comment', auth.required, asyncMiddleware(async (req, res) => {
 
 router.get('/', auth.required, asyncMiddleware(async (req, res) => {
     const { payload } = req;
-    const { body } = req;
 
     try {
-
         const user = await Users.findById(payload.id);
-        console.log(user.friends);
-
-
-        const posts = await Users.find({ })
-            .select('-_id -__v -updatedAt')
+        const posts = await Posts.find({ user: { $in: user.friends } })
+            .select('-__v -updatedAt')
             .populate({
                 path: 'comments',
                 select: 'comment -_id'
