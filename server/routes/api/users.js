@@ -192,6 +192,20 @@ router.get('/friends', auth.required, asyncMiddleware(async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
+}));
+
+router.get('/friendRequests', auth.required, asyncMiddleware(async (req, res) => {
+    const { payload } = req;
+
+    try {
+        const friendRequests = await FriendRequests.find({ to: payload.id }).where('status').equals('pending').populate({
+            path: 'from',
+            select: 'username'
+        });
+        return res.json(friendRequests);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }))
 
 module.exports = router;

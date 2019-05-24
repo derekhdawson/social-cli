@@ -44,6 +44,9 @@ module.exports = () => {
         case 'friends':
             require('./cmds/friends')(args)
             break
+        case 'friend-requests':
+            require('./cmds/friendRequests')(args)
+            break
         case 'comment':
             require('./cmds/comment')(args)
             break

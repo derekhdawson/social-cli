@@ -37,6 +37,10 @@ const menus = {
 
         friends.................. see list of your friends
 
+
+        friend-requests.......... see list of incoming friend requests
+        
+
         search-users.............. search for users on the network
 
 

@@ -16,11 +16,13 @@ module.exports = async (args) => {
         console.log();
         results.forEach((result) => {
             const post = result.post;
-            const comments = results.comments;
+            const _id = result._id;
             delete result.post;
+            delete result._id;
             result.createdAt = new Date(result.createdAt).toLocaleString();
             console.log(prettyjson.render({
-                post
+                post,
+                _id
             }));
             console.log(prettyjson.render(result));
             console.log('\n--------------------------------------------------\n');

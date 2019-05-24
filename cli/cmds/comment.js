@@ -18,7 +18,7 @@ module.exports = async (args) => {
 
     try {
         await api.commentOnPost({ postId, comment });
-        spinner.stop().succeed('your comment was created');
+        spinner.stop().succeed('your comment was added to this post');
     } catch (error) {
         spinner.stop().fail(error.response.data.message);
     }

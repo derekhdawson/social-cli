@@ -147,3 +147,10 @@ exports.getFriends = () => {
         endpoint: 'users/friends'
     })
 }
+
+exports.getFriendRequests = () => {
+    return request({
+        method: 'GET',
+        endpoint: 'users/friendRequests'
+    })
+}

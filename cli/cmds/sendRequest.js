@@ -20,7 +20,6 @@ module.exports = async (args) => {
 
     const spinner = ora().start();
     api.sendFriendRequest(options).then((response) => {
-        console.log(response);
         spinner.stop().succeed('friend request was sent ✈️');
     }).catch((error) => {
         spinner.stop().fail(error.response.data);
