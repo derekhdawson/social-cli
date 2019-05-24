@@ -35,8 +35,14 @@ module.exports = () => {
         case 'search-users':
             require('./cmds/searchUsers')(args)
             break
-        case 'post':
-            require('./cmds/post')(args)
+        case 'create-post':
+            require('./cmds/createPost')(args)
+            break
+        case 'posts':
+            require('./cmds/posts')(args)
+            break
+        case 'friends':
+            require('./cmds/friends')(args)
             break
         case 'comment':
             require('./cmds/comment')(args)

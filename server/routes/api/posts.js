@@ -4,6 +4,7 @@ const auth = require('../auth');
 const Users = mongoose.model('Users');
 const Posts = mongoose.model('Posts');
 const Comments = mongoose.model('Comments');
+const FriendRequests = mongoose.model('FriendRequests');
 const asyncMiddleware = require('../../utils').asyncMiddleware;
 
 router.post('/', auth.required, asyncMiddleware(async (req, res) => {
@@ -72,6 +73,36 @@ router.post('/comment', auth.required, asyncMiddleware(async (req, res) => {
         res.json('your comment was added to this post');
     } catch (error) {
         res.status(500).error(error);
+    }
+}));
+
+router.get('/', auth.required, asyncMiddleware(async (req, res) => {
+    const { payload } = req;
+    const { body } = req;
+
+    try {
+
+        const user = await Users.findById(payload.id);
+        console.log(user.friends);
+
+
+        const posts = await Users.find({ })
+            .select('-_id -__v -updatedAt')
+            .populate({
+                path: 'comments',
+                select: 'comment -_id'
+            })
+            .populate({
+                path: 'taggedUsers',
+                select: 'username -_id'
+            })
+            .populate({
+                path: 'user',
+                select: 'username -_id'
+            })
+        return res.json(posts);
+    } catch (error) {
+        return res.status(500).error(error);
     }
 }))
 

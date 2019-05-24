@@ -133,3 +133,17 @@ exports.commentOnPost = ({ comment, postId }) => {
         body
     })
 };
+
+exports.getPosts = () => {
+    return request({
+        method: 'GET',
+        endpoint: 'posts'
+    })
+}
+
+exports.getFriends = () => {
+    return request({
+        method: 'GET',
+        endpoint: 'users/friends'
+    })
+}

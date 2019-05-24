@@ -100,6 +100,16 @@ router.post('/sendFriendRequest', auth.required, asyncMiddleware( async(req, res
         toId = user._id;
     }
 
+    try {
+        const existingFriendRequest = await FriendRequests.findOne({ from: fromId, to: toId });
+        if (existingFriendRequest) {
+            return res.status(422).json('you have already send a friend request to this user');
+        }
+    } catch (error) {
+        res.status(500).error(error);
+    }
+
+
     const friendRequest = new FriendRequests({
         from: fromId,
         to: toId
@@ -108,7 +118,7 @@ router.post('/sendFriendRequest', auth.required, asyncMiddleware( async(req, res
     friendRequest.save().then((response) => {
         res.json(response);
     }).catch((error) => {
-        res.status(422).json(error);
+        res.status(422).error(error);
     })
 }));
 
@@ -151,7 +161,7 @@ router.post('/acceptFriendRequest', auth.required, asyncMiddleware( async(req, r
                     username: friendAdded.username
                 });
             }).catch((error) => {
-                res.status(422).json();
+                res.status(422).error();
             })
         } else if (fr.status === 'accepted') {
             res.status(422).json('you have already accepted this request.')
@@ -159,7 +169,7 @@ router.post('/acceptFriendRequest', auth.required, asyncMiddleware( async(req, r
             res.status(422).json('you have already rejected this request.')
         }
     }).catch((error) => {
-        res.json(error);
+        res.status(500).json(error);
     })
 }));
 
@@ -169,6 +179,19 @@ router.get('/searchUsers', auth.required, (req, res) => {
     }).catch((error) => {
         res.status(500).json(error);
     })
-})
+});
+
+router.get('/friends', auth.required, asyncMiddleware(async (req, res) => {
+    const { payload } = req;
+    try {
+        const friends = await Users.findById(payload.id).select('friends -_id').populate({
+            path: 'friends',
+            select: 'username email'
+        })
+        return res.json(friends);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}))
 
 module.exports = router;

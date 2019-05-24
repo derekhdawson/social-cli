@@ -12,12 +12,13 @@ const menus = {
         logout................. logs you out of social
 
 
-        post................... make a post
+        create-post................... make a post
 
             examples:
-            social post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee"
+            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee"
 
         comment................. comment on a post
+
             examples:
             social comment --comment="nice photo!" postId="5ce30cddf9534a3486266621"
 
@@ -33,6 +34,8 @@ const menus = {
             examples:
             social accept-request --id="5cd9c466a612adac28e0023d"
             social accept-request --username="derekd"
+
+        friends.................. see list of your friends
 
         search-users.............. search for users on the network
 
@@ -69,8 +72,8 @@ const menus = {
 
         --username=[username]
     `,
-    post: `
-        social post <options>
+    'create-post': `
+        social create-post <options>
 
         --post=[post]
         --tag=<username1, username2, username3...>
