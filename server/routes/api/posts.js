@@ -78,10 +78,18 @@ router.post('/comment', auth.required, asyncMiddleware(async (req, res) => {
 
 router.get('/', auth.required, asyncMiddleware(async (req, res) => {
     const { payload } = req;
+    const skip = parseInt(req.query.skip, 10);
+    const limit = parseInt(req.query.limit, 10);
 
     try {
         const user = await Users.findById(payload.id);
-        const posts = await Posts.find({ user: { $in: user.friends } })
+
+        const queryCondition = { user: { $in: user.friends } };
+        const count = await Posts.countDocuments(queryCondition);
+
+        const posts = await Posts.find(queryCondition)
+            .skip(skip)
+            .limit(limit)
             .select('-__v -updatedAt')
             .populate({
                 path: 'comments',
@@ -95,9 +103,14 @@ router.get('/', auth.required, asyncMiddleware(async (req, res) => {
                 path: 'user',
                 select: 'username -_id'
             })
-        return res.json(posts);
+        return res.json({
+            posts,
+            totalNumPosts: count
+        });
+
+
     } catch (error) {
-        return res.status(500).error(error);
+        return res.status(500).json(error);
     }
 }))
 

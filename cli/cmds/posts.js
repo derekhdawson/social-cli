@@ -5,30 +5,47 @@ const keytar = require('keytar');
 const config = require('../config');
 const prettyjson = require('prettyjson');
 
-module.exports = async (args) => {
+let totalNumPostsFetched = 0;
+const postLimit = 1;
 
-    // if (!args.comment || !args.postId) {
-    //     console.log(`you must include the arguments --comment and --postId`);
-    //     return;
-    // }
-
-    api.getPosts().then((results) => {
+const getPosts = async (skip) => {
+    api.getPosts(skip, postLimit).then((results) => {
+        const totalNumPosts = results.totalNumPosts;
         console.log();
-        results.forEach((result) => {
+        results.posts.forEach((result) => {
             const post = result.post;
             const _id = result._id;
+            const username = result.user.username;
             delete result.post;
             delete result._id;
+            delete result.user;
             result.createdAt = new Date(result.createdAt).toLocaleString();
             console.log(prettyjson.render({
+                username,
                 post,
                 _id
             }));
             console.log(prettyjson.render(result));
             console.log('\n--------------------------------------------------\n');
+
+            totalNumPostsFetched += results.posts.length;
+
+            if (totalNumPostsFetched < totalNumPosts) {
+                utils.promptInput(`Do you want to fetch ${Math.min(postLimit, totalNumPosts - totalNumPostsFetched)} more posts (y/n)? `).then((answer) => {
+                    answer = answer.toLocaleLowerCase();
+                    if (answer === 'y' || answer === 'yes') {
+                        getPosts(totalNumPostsFetched);
+                    }
+                })
+            }
         })
     }).catch((error) => {
         console.log(error);
     })
+}
+
+module.exports = async (args) => {
+
+    getPosts(0);
     
 }

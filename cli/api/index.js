@@ -141,10 +141,14 @@ exports.commentOnPost = ({ comment, postId }) => {
     })
 };
 
-exports.getPosts = () => {
+exports.getPosts = (skip, postLimit) => {
     return request({
         method: 'GET',
-        endpoint: 'posts'
+        endpoint: 'posts',
+        params: {
+            skip,
+            limit: postLimit
+        }
     })
 }
 
