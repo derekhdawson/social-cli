@@ -6,6 +6,7 @@ const Users = mongoose.model('Users');
 const FriendRequests = mongoose.model('FriendRequests');
 const Q = require('q');
 const asyncMiddleware = require('../../utils').asyncMiddleware;
+var FuzzySearch = require('fuzzy-search');
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -174,8 +175,18 @@ router.post('/acceptFriendRequest', auth.required, asyncMiddleware( async(req, r
 }));
 
 router.get('/searchUsers', auth.required, (req, res) => {
+    const username = req.query.username;
     Users.find().select('username email').then((users) => {
-        res.json(users);
+        if (username) {
+            const searcher = new FuzzySearch(users, ['username', 'email'], {
+                caseSensitive: false,
+                sort: true
+            });
+            const searchResult = searcher.search(username);
+            res.json(searchResult);
+        } else {
+            res.json(users);
+        }
     }).catch((error) => {
         res.status(500).json(error);
     })

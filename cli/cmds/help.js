@@ -33,7 +33,7 @@ const menus = {
 
             examples:
             social accept-request --id="5cd9c466a612adac28e0023d"
-            social accept-request --username="derekd"
+            social accept-request --username="derek"
 
         friends.................. see list of your friends
 
@@ -42,6 +42,9 @@ const menus = {
         
 
         search-users.............. search for users on the network
+
+            examples:
+            social search-users --username="derek"
 
 
         help .................. show help menu for a command
@@ -56,6 +59,10 @@ const menus = {
 
         --email=[your email]
         --password=[your password]`,
+
+    logout: `
+        social logout
+    `,
     
     'send-request': `
         social send-request <options>
@@ -88,6 +95,9 @@ const menus = {
         
         --comment=[comment]
         --postId=[id]
+    `,
+    friends: `
+        social friends
     `
 
     

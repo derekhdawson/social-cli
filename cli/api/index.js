@@ -9,11 +9,15 @@ const request = (options) => {
     return new Promise((resolve, reject) => {
         let requestObj = {
             method: options.method,
-            url: `${SERVER_URL}/${options.endpoint}`
+            url: `${SERVER_URL}/${options.endpoint}`,
         }
 
         if (options.body) {
             requestObj.data = options.body;
+        }
+
+        if (options.params) {
+            requestObj.params = options.params;
         }
     
         if (options.authNotRequired) {
@@ -107,10 +111,13 @@ exports.acceptFriendRequest = ({ id, username }) => {
     })
 };
 
-exports.searchUsers = () => {
+exports.searchUsers = (username) => {
     return request({
         method: 'GET',
-        endpoint: 'users/searchUsers'
+        endpoint: 'users/searchUsers',
+        params: {
+            username
+        }
     });
 };
 
