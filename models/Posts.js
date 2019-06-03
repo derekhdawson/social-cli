@@ -31,6 +31,11 @@ const Posts = new Schema({
             ref: 'Users'
         }],
         default: []
+    },
+    isPublic: {
+        type: Schema.Types.Boolean,
+        required: false,
+        default: false
     }
 }, {
     timestamps: true

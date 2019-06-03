@@ -34,12 +34,14 @@ router.post('/', auth.required, asyncMiddleware(async (req, res) => {
     let post = body.post;
     let hashtags = body.hashtags;
     let user = payload.id;
+    let isPublic = !!body.isPublic;
 
     const newPost = new Posts({
         user,
         post,
         taggedUsers,
-        hashtags
+        hashtags,
+        isPublic
     });
 
     try {
@@ -80,11 +82,27 @@ router.get('/', auth.required, asyncMiddleware(async (req, res) => {
     const { payload } = req;
     const skip = parseInt(req.query.skip, 10);
     const limit = parseInt(req.query.limit, 10);
+    let global = req.query.global === 'true';
+    let { hashtags } = req.query;
 
     try {
         const user = await Users.findById(payload.id);
 
-        const queryCondition = { user: { $in: user.friends } };
+        let queryCondition;
+
+        if (!global) {
+            queryCondition = { user: { $in: user.friends } };
+        } else {
+            queryCondition = { isPublic: true };
+        }
+
+        if (hashtags) {
+            queryCondition = {
+                ...queryCondition,
+                hashtags: { $in: hashtags }
+            };
+        }
+
         const count = await Posts.countDocuments(queryCondition);
 
         const posts = await Posts.find(queryCondition)
