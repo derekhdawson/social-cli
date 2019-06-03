@@ -3,7 +3,7 @@ const axios = require('axios');
 const utils = require('../utils');
 const ora = require('ora')
 
-const SERVER_URL = config.environment === config.environments.DEV ? 'http://localhost:8000/api' : 'https://cli-social-network.herokuapp.com/';
+const SERVER_URL = config.environment === config.environments.DEV ? 'http://localhost:8000/api' : 'https://cli-social-network.herokuapp.com';
 
 const request = (options) => {
     return new Promise((resolve, reject) => {

@@ -15,18 +15,6 @@ app.use(cors());
 app.use(require('morgan')('dev'));
 app.use(bodyParser.json());
 
-console.log('----------------------');
-console.log(config.PASSPORT_SECRET);
-
-app.use(session({
-    secret: config.PASSPORT_SECRET,
-    cookie: {
-        maxAge: 60000
-    },
-    resave: false,
-    saveUninitialized: false
-}));
-
 if (!isProduction) {
     app.use(errorHandler());
 }
@@ -71,4 +59,5 @@ app.use((err, req, res) => {
     });
 });
 
-app.listen(8000, () => console.log('Server running on http://localhost:8000/'));
+const port = process.env.PORT || 8000;
+app.listen(port, () => console.log(`Server running on ${isProduction ? `port ${process.env.PORT}` : 'http://localhost:8000/'}`));
