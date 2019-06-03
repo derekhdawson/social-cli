@@ -48,16 +48,5 @@ if (!isProduction) {
     });
 }
 
-app.use((err, req, res) => {
-    res.status(err.status || 500);
-
-    res.json({
-        errors: {
-            message: err.message,
-            error: {},
-        },
-    });
-});
-
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server running on ${isProduction ? `port ${process.env.PORT}` : 'http://localhost:8000/'}`));
