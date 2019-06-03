@@ -5,7 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
-const keys = require('./keys');
+const config = require('./config');
 
 mongoose.promise = global.Promise;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -14,8 +14,12 @@ const app = express();
 app.use(cors());
 app.use(require('morgan')('dev'));
 app.use(bodyParser.json());
+
+console.log('----------------------');
+console.log(config.PASSPORT_SECRET);
+
 app.use(session({
-    secret: keys.PASSPORT_SECRET,
+    secret: config.PASSPORT_SECRET,
     cookie: {
         maxAge: 60000
     },
@@ -28,7 +32,7 @@ if (!isProduction) {
 }
 
 //Configure Mongoose
-mongoose.connect(keys.MONGO_CONNECTION, { useNewUrlParser: true }).then(() => {
+mongoose.connect(config.MONGO_CONNECTION, { useNewUrlParser: true }).then(() => {
     console.log('connected to mlab');
 }).catch((error) => {
     console.log(error);
