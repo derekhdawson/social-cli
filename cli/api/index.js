@@ -121,10 +121,11 @@ exports.searchUsers = (username) => {
     });
 };
 
-exports.createPost = ({ post, taggedUsers, hashtags }) => {
+exports.createPost = ({ post, taggedUsers, hashtags, isPublic }) => {
     const body = { post };
     if (taggedUsers) body.taggedUsers = taggedUsers;
     if (hashtags) body.hashtags = hashtags;
+    if (isPublic) body.isPublic = isPublic;
     return request({
         method: 'POST',
         endpoint: 'posts',
@@ -141,13 +142,18 @@ exports.commentOnPost = ({ comment, postId }) => {
     })
 };
 
-exports.getPosts = (skip, postLimit) => {
+exports.getPosts = ({ skip, postLimit, global, hashtags }) => {
+
+    console.log(global);
+
     return request({
         method: 'GET',
         endpoint: 'posts',
         params: {
             skip,
-            limit: postLimit
+            limit: postLimit,
+            global,
+            hashtags
         }
     })
 }

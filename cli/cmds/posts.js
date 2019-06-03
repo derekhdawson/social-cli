@@ -8,8 +8,8 @@ const prettyjson = require('prettyjson');
 let totalNumPostsFetched = 0;
 const postLimit = 1;
 
-const getPosts = async (skip) => {
-    api.getPosts(skip, postLimit).then((results) => {
+const getPosts = async (skip, options) => {
+    api.getPosts({skip, postLimit, ...options}).then((results) => {
         const totalNumPosts = results.totalNumPosts;
         console.log();
         results.posts.forEach((result) => {
@@ -34,7 +34,7 @@ const getPosts = async (skip) => {
                 utils.promptInput(`Do you want to fetch ${Math.min(postLimit, totalNumPosts - totalNumPostsFetched)} more posts (y/n)? `).then((answer) => {
                     answer = answer.toLocaleLowerCase();
                     if (answer === 'y' || answer === 'yes') {
-                        getPosts(totalNumPostsFetched);
+                        getPosts(totalNumPostsFetched, options);
                     }
                 })
             }
@@ -46,6 +46,9 @@ const getPosts = async (skip) => {
 
 module.exports = async (args) => {
 
-    getPosts(0);
+    const hashtags = args.hashtags && args.hashtags.split(',');
+    const global = args.global;
+
+    getPosts(0, { hashtags, global });
     
 }

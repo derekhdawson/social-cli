@@ -11,11 +11,16 @@ const menus = {
 
         logout................. logs you out of social
 
+        posts ................. see all posts, filter by hashtags
+
+            examples:
+            social posts --hashtags="basketball,nba finals"
+            social posts --global=true
 
         create-post................... make a post
 
             examples:
-            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee"
+            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee" --is-public=true
 
         comment................. comment on a post
 
@@ -48,7 +53,6 @@ const menus = {
 
 
         help .................. show help menu for a command
-        
         `,
 
     register: `
@@ -89,6 +93,7 @@ const menus = {
         --post=[post]
         --tag=<username1, username2, username3...>
         --hashtags=<hashtag1, hashtag2, hashtag3...>
+        --is-public=[isPublic]
     `,
     comment: `
         social comment <options>
@@ -98,6 +103,12 @@ const menus = {
     `,
     friends: `
         social friends
+    `,
+    posts: `
+        social posts <options>
+
+        --global=[global]
+        --hashtags=<hashtag1, hashtag2, hashtag3...>
     `
 
     
