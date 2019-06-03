@@ -1,4 +1,4 @@
-exports.environment = 'dev'
+exports.environment = 'prod'
 exports.environments = {
     DEV: 'dev',
     PROD: 'prod'
