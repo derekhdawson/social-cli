@@ -48,5 +48,11 @@ if (!isProduction) {
     });
 }
 
+
+
+
+
+
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server running on ${isProduction ? `port ${process.env.PORT}` : 'http://localhost:8000/'}`));

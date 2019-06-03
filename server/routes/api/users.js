@@ -10,6 +10,10 @@ var FuzzySearch = require('fuzzy-search');
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
+
+
+    console.log('$$$$$$$$$$$$$$$$$$$');
+
     const { body: { user } } = req;
 
     Q.allSettled([
