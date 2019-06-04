@@ -142,9 +142,7 @@ exports.commentOnPost = ({ comment, postId }) => {
     })
 };
 
-exports.getPosts = ({ skip, postLimit, global, hashtags }) => {
-
-    console.log(global);
+exports.getPosts = ({ skip, postLimit, global, hashtags, taggedIn }) => {
 
     return request({
         method: 'GET',
@@ -153,7 +151,8 @@ exports.getPosts = ({ skip, postLimit, global, hashtags }) => {
             skip,
             limit: postLimit,
             global,
-            hashtags
+            hashtags,
+            taggedIn
         }
     })
 }

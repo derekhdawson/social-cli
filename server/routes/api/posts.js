@@ -83,7 +83,7 @@ router.get('/', auth.required, asyncMiddleware(async (req, res) => {
     const skip = parseInt(req.query.skip, 10);
     const limit = parseInt(req.query.limit, 10);
     let global = req.query.global === 'true';
-    let { hashtags } = req.query;
+    let { hashtags, taggedIn } = req.query;
 
     try {
         const user = await Users.findById(payload.id);
@@ -101,6 +101,13 @@ router.get('/', auth.required, asyncMiddleware(async (req, res) => {
                 ...queryCondition,
                 hashtags: { $in: hashtags }
             };
+        }
+
+        if (taggedIn) {
+            queryCondition = {
+                ...queryCondition,
+                taggedUsers: { $in: payload.id }
+            }
         }
 
         const count = await Posts.countDocuments(queryCondition);
@@ -121,6 +128,7 @@ router.get('/', auth.required, asyncMiddleware(async (req, res) => {
                 path: 'user',
                 select: 'username -_id'
             })
+            .sort('-createdAt')
         return res.json({
             posts,
             totalNumPosts: count

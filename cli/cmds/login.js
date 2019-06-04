@@ -6,8 +6,6 @@ const config = require('../config');
 
 module.exports = async (args) => {
 
-    console.log(args);
-
     try {
         const user = await utils.getCurrentUser();
         if (user) {
@@ -38,7 +36,7 @@ module.exports = async (args) => {
         return;
     }
 
-    const spinner = ora().start()
+    const spinner = ora().start();
     try {
         const user = await api.login({
             email,

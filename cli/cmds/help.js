@@ -15,12 +15,13 @@ const menus = {
 
             examples:
             social posts --hashtags="basketball,nba finals"
-            social posts --global=true
+            social posts --global
+            social posts --tagged-in
 
         create-post................... make a post
 
             examples:
-            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee" --is-public=true
+            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee" --global
 
         comment................. comment on a post
 
@@ -107,8 +108,9 @@ const menus = {
     posts: `
         social posts <options>
 
-        --global=[global]
         --hashtags=<hashtag1, hashtag2, hashtag3...>
+        --global
+        --tagged-in
     `
 
     
