@@ -21,7 +21,7 @@ const menus = {
         create-post................... make a post
 
             examples:
-            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee" --global
+            social create-post --post="Just saw Endgame, it was incredible" --tag="derek,andrew"  --hashtags="endgame,mustsee" --global --image='/Users/john/Desktop/sunset.png'
 
         comment................. comment on a post
 
@@ -94,7 +94,8 @@ const menus = {
         --post=[post]
         --tag=<username1, username2, username3...>
         --hashtags=<hashtag1, hashtag2, hashtag3...>
-        --is-public=[isPublic]
+        --is-public
+        --image=[path to image]
     `,
     comment: `
         social comment <options>

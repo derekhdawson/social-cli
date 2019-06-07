@@ -1,6 +1,8 @@
 const readline = require('readline');
 const config = require('../config');
 const keytar = require('keytar');
+const keys = require('../keys');
+var cloudinary = require('cloudinary').v2
 
 exports.promptInput = (question) => {
     const rl = readline.createInterface({
@@ -33,5 +35,23 @@ exports.getCurrentUser = () => {
         return null;
     }).catch(() => {
         return null;
+    })
+}
+
+cloudinary.config({
+    cloud_name: keys.CLOUDINARY_CLOUD_NAME,
+    api_key: keys.CLOUDINARY_API_KEY,
+    api_secret: keys.CLOUDINARY_API_SECRET
+});
+
+exports.uploadImage = (imagePath) => {
+    return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(imagePath, {}, function(err, image) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(image);
+            }
+        })
     })
 }

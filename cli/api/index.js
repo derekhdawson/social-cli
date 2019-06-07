@@ -121,11 +121,12 @@ exports.searchUsers = (username) => {
     });
 };
 
-exports.createPost = ({ post, taggedUsers, hashtags, isPublic }) => {
+exports.createPost = ({ post, taggedUsers, hashtags, isPublic, imageURL }) => {
     const body = { post };
     if (taggedUsers) body.taggedUsers = taggedUsers;
     if (hashtags) body.hashtags = hashtags;
     if (isPublic) body.isPublic = isPublic;
+    if (imageURL) body.imageURL = imageURL;
     return request({
         method: 'POST',
         endpoint: 'posts',

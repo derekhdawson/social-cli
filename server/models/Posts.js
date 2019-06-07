@@ -36,7 +36,8 @@ const Posts = new Schema({
         type: Schema.Types.Boolean,
         required: false,
         default: false
-    }
+    },
+    imageURL: Schema.Types.String
 }, {
     timestamps: true
 });

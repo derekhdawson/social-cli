@@ -4,7 +4,6 @@ const auth = require('../auth');
 const Users = mongoose.model('Users');
 const Posts = mongoose.model('Posts');
 const Comments = mongoose.model('Comments');
-const FriendRequests = mongoose.model('FriendRequests');
 const asyncMiddleware = require('../../utils').asyncMiddleware;
 
 router.post('/', auth.required, asyncMiddleware(async (req, res) => {
@@ -31,17 +30,17 @@ router.post('/', auth.required, asyncMiddleware(async (req, res) => {
         }
     }
 
-    let post = body.post;
-    let hashtags = body.hashtags;
-    let user = payload.id;
-    let isPublic = !!body.isPublic;
+    const { post, hashtags, imageURL } = body;
+    const user = payload.id;
+    const isPublic = !!body.isPublic;
 
     const newPost = new Posts({
         user,
         post,
         taggedUsers,
         hashtags,
-        isPublic
+        isPublic,
+        imageURL
     });
 
     try {
